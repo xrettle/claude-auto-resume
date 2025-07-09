@@ -3,6 +3,9 @@
 # Auto-resume script for Claude CLI tasks
 # Depends only on standard shell commands and claude CLI
 
+# Version information
+VERSION="1.2.0"
+
 # Default prompt to use when resuming
 DEFAULT_PROMPT="continue"
 # Default is to start new session (no -c flag)
@@ -82,6 +85,8 @@ OPTIONS:
     -p, --prompt PROMPT    Custom prompt (default: "continue")
     -c, --continue        Continue previous conversation
     -h, --help           Show this help
+    -v, --version        Show version information
+    --check              Show system check information
 
 EXAMPLES:
     claude-auto-resume "implement feature"
@@ -108,6 +113,76 @@ while [[ $# -gt 0 ]]; do
             ;;
         -h|--help)
             show_help
+            exit 0
+            ;;
+        -v|--version)
+            echo "claude-auto-resume v${VERSION}"
+            exit 0
+            ;;
+        --check)
+            # Display comprehensive system check information
+            echo "claude-auto-resume v${VERSION} - System Check"
+            echo "================================================"
+            echo ""
+            
+            # Script version
+            echo "Script Information:"
+            echo "  Version: ${VERSION}"
+            echo "  Location: $(realpath "$0")"
+            echo ""
+            
+            # Claude CLI check
+            echo "Claude CLI Information:"
+            if command -v claude &> /dev/null; then
+                echo "  Status: Available"
+                echo "  Location: $(which claude)"
+                
+                # Try to get Claude CLI version
+                CLAUDE_VERSION=$(claude --version 2>/dev/null || echo "Unknown")
+                echo "  Version: ${CLAUDE_VERSION}"
+                
+                # Check for dangerously-skip-permissions support
+                if claude --help | grep -q "dangerously-skip-permissions"; then
+                    echo "  --dangerously-skip-permissions: Supported"
+                else
+                    echo "  --dangerously-skip-permissions: Not supported"
+                fi
+            else
+                echo "  Status: Not found"
+                echo "  [ERROR] Claude CLI not found in PATH"
+            fi
+            echo ""
+            
+            # System compatibility
+            echo "System Compatibility:"
+            echo "  OS: $(uname -s)"
+            echo "  Architecture: $(uname -m)"
+            echo "  Shell: $SHELL"
+            echo ""
+            
+            # Network utilities check
+            echo "Network Utilities:"
+            echo "  ping: $(command -v ping &> /dev/null && echo "Available" || echo "Not found")"
+            echo "  curl: $(command -v curl &> /dev/null && echo "Available" || echo "Not found")"
+            echo "  wget: $(command -v wget &> /dev/null && echo "Available" || echo "Not found")"
+            echo ""
+            
+            # Environment validation
+            echo "Environment Validation:"
+            if command -v claude &> /dev/null; then
+                echo "  Claude CLI: ✓ Available"
+            else
+                echo "  Claude CLI: ✗ Not found"
+            fi
+            
+            # Network connectivity check
+            echo -n "  Network connectivity: "
+            if check_network_connectivity &> /dev/null; then
+                echo "✓ Connected"
+            else
+                echo "✗ Failed"
+            fi
+            
             exit 0
             ;;
         -*)
