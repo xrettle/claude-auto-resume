@@ -1,17 +1,18 @@
 # Claude Auto-Resume
 
-A shell script utility that automatically resumes Claude CLI tasks when usage limits are lifted. It detects Claude usage restrictions, waits intelligently, and resumes task execution automatically.
+A shell script utility that automatically resumes Claude CLI tasks when usage limits are lifted, or executes custom shell commands after waiting periods. It detects Claude usage restrictions, waits intelligently, and resumes task execution automatically.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F11HO935)
 
 ## ⚠️ SECURITY WARNING
 
-**This script uses `--dangerously-skip-permissions` flag when executing Claude commands**, which means:
+**This script uses `--dangerously-skip-permissions` flag when executing Claude commands and can execute arbitrary shell commands**, which means:
 
 - **Claude Code will execute tasks WITHOUT asking for permission**
+- **Custom shell commands will execute WITHOUT user confirmation**
 - **File operations, system commands, and code changes will run automatically**
-- **Use ONLY in trusted environments and with trusted prompts**
-- **Review your prompt carefully before running this script**
+- **Use ONLY in trusted environments and with trusted prompts/commands**
+- **Review your prompt or command carefully before running this script**
 
 **Recommended Usage:**
 - Use in isolated development environments
@@ -25,12 +26,14 @@ This script is particularly useful when using Claude Code for development in the
 
 1. **Task Interrupted by Usage Limits**: When your Claude Code shows `Claude usage limit reached.` but your task is not yet completely finished
 2. **Automatic Task Resumption**: Simply run `claude-auto-resume` in your project's root directory, and when the usage limit is lifted, the script will automatically let Claude Code continue executing your previously unfinished task
+3. **Custom Command Execution**: Execute any shell command after waiting for usage limits, useful for restarting services, running builds, or processing data
 
 ## Features
 
 - 🔄 Automatically detects Claude CLI usage limits
 - ⏰ Smart waiting with countdown display
 - 🚀 Automatic task resumption
+- 🔧 Custom command execution after wait periods
 - 🖥️ Cross-platform support (Linux/macOS)
 - 📦 Zero external dependencies (only standard Unix tools required)
 
@@ -90,6 +93,12 @@ claude-auto-resume -c "please continue the previous task"
 # Continue previous conversation with custom prompt using flag
 claude-auto-resume -c -p "resume where we left off"
 
+# Execute custom command after wait period
+claude-auto-resume -e "npm run dev"
+
+# Execute custom command with alias flag
+claude-auto-resume --cmd "python app.py"
+
 # Show help
 claude-auto-resume --help
 ```
@@ -108,6 +117,9 @@ chmod +x claude-auto-resume.sh
 
 # Continue previous conversation
 ./claude-auto-resume.sh -c "continue with the implementation"
+
+# Execute custom command after wait period
+./claude-auto-resume.sh -e "make build"
 ```
 
 ## How It Works
@@ -119,6 +131,7 @@ chmod +x claude-auto-resume.sh
 5. **Auto Resume**: Automatically execute either:
    - `claude --dangerously-skip-permissions -p "<custom-prompt>"` (new session, default)
    - `claude -c --dangerously-skip-permissions -p "<custom-prompt>"` (continue conversation with -c flag)
+   - Custom shell command with `-e/--execute` or `--cmd` flags
 
 ## Command Line Options
 
@@ -126,6 +139,8 @@ chmod +x claude-auto-resume.sh
 - **Single argument**: Start new session with custom prompt (e.g., `claude-auto-resume "implement feature"`)
 - **-p, --prompt**: Specify custom prompt with flag (e.g., `claude-auto-resume -p "write tests"`)
 - **-c, --continue**: Continue previous conversation (adds -c flag to claude command)
+- **-e, --execute**: Execute custom shell command after wait period (e.g., `claude-auto-resume -e "npm run dev"`)
+- **--cmd**: Alias for -e/--execute (e.g., `claude-auto-resume --cmd "python app.py"`)
 - **-h, --help**: Show help message and usage examples
 
 ## Session Types
@@ -145,6 +160,14 @@ claude-auto-resume -c "keep going"           # Continue with custom prompt
 claude-auto-resume -c -p "resume work"       # Continue with flag
 ```
 
+### Execute Custom Commands
+Execute any shell command after the wait period:
+```bash
+claude-auto-resume -e "npm run dev"          # Start development server
+claude-auto-resume --cmd "python app.py"     # Run Python application
+claude-auto-resume -e "make build && ./app"  # Complex command with pipes
+```
+
 ## Requirements
 
 - **Claude CLI**: Must be installed and available in PATH
@@ -162,9 +185,10 @@ This script uses `--dangerously-skip-permissions` to enable unattended operation
 ### Best Practices
 - **Environment isolation**: Use only in development/testing environments
 - **Prompt review**: Carefully craft prompts to limit scope (e.g., "continue implementing the login function in src/auth.js")
+- **Command review**: Verify custom commands are safe and appropriate for your environment
 - **Backup your work**: Ensure you have version control or backups before running
 - **Monitor execution**: Check the output to understand what actions were taken
-- **Limit scope**: Use specific prompts rather than open-ended ones
+- **Limit scope**: Use specific prompts/commands rather than open-ended ones
 
 ## Error Handling
 
