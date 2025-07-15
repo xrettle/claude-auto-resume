@@ -2,6 +2,8 @@
 
 A shell script utility that automatically resumes Claude CLI tasks when usage limits are lifted, or executes custom shell commands after waiting periods. It detects Claude usage restrictions, waits intelligently, and resumes task execution automatically.
 
+English | [中文](README.zh.md)
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F11HO935)
 
 ## ⚠️ SECURITY WARNING
@@ -234,7 +236,8 @@ claude-auto-resume/
 │   ├── prd.md              # Product requirements document
 │   └── stories/            # User stories
 ├── CLAUDE.md               # Claude Code guide
-└── README.md               # Project description
+├── README.md               # Project description (English)
+└── README.zh.md            # Project description (中文)
 ```
 
 ## Roadmap
