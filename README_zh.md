@@ -2,9 +2,9 @@
 
 一个 Shell 脚本工具，可在 Claude CLI 使用限制解除后自动恢复任务，或在等待期后执行自定义 Shell 命令。它能检测 Claude 使用限制，智能等待，并自动恢复任务执行。
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F11HO935)
+[English](README.md) | 中文
 
-[English Documentation](README.md)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F11HO935)
 
 ## ⚠️ 安全警告
 
