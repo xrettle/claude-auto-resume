@@ -6,9 +6,9 @@ English | [中文](README_zh.md)
 
 ### Claude/Codex 拼车服务
 
-| 平台 | 类型 | 服务 | 介绍 |
+| 平台 | 类型 | 服务 | 扫码拼团 |
 |:---|:---|:---|:---|
-| **[ctok.ai](https://ctok.ai/)** | 🤝 合作伙伴 | <small>✅ Claude Code<br>✅ Codex CLI</small> | 热心网友提供 Claude Code / Codex CLI 拼车 |
+| **ctok.ai** | 🤝 合作伙伴 | <small>✅ Claude Code<br>✅ Codex CLI</small> | ![](https://i.v2ex.co/5fFFN356.png) |
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F11HO935)
 
