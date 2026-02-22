@@ -1,5 +1,7 @@
 # Claude Auto-Resume
 
+[![BMAD](https://bmad-badge.vercel.app/terryso/claude-auto-resume.svg)](https://github.com/bmad-code-org/BMAD-METHOD)
+
 A shell script utility that automatically resumes Claude CLI tasks when usage limits are lifted, or executes custom shell commands after waiting periods. It detects Claude usage restrictions, waits intelligently, and resumes task execution automatically.
 
 English | [中文](README_zh.md)
